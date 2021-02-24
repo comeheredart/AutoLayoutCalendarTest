@@ -14,6 +14,14 @@ class calendarCollectionViewCell: UICollectionViewCell {
     let dayLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    let scheduleLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = .systemFont(ofSize: 10)
         return label
     }()
     
@@ -30,6 +38,22 @@ class calendarCollectionViewCell: UICollectionViewCell {
         super.layoutSubviews()
         
         contentView.addSubview(dayLabel)
-        dayLabel.frame = contentView.frame
+        contentView.addSubview(scheduleLabel)
+        
+        addContraints()
+
+    }
+    
+    private func addContraints() {
+        NSLayoutConstraint.activate([
+            dayLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
+            dayLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor)
+        ])
+        
+        NSLayoutConstraint.activate([
+            scheduleLabel.topAnchor.constraint(equalTo: dayLabel.bottomAnchor, constant: 20),
+            scheduleLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor)
+        
+        ])
     }
 }

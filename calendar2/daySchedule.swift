@@ -7,6 +7,7 @@
 
 import Foundation
 
+
 class daySchedule {
     var day: String = ""
     var title: String = ""
