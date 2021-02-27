@@ -241,7 +241,7 @@ class ViewController: UIViewController {
         return String(input)
     }
     
-    func showTypeSchedule(type: Int, index: Int, cell: UICollectionViewCell) {
+    func showTypeSchedule(type: Int, index: Int, cell: calendarCollectionViewCell) {
         switch type {
         case 0:
             showSchedule(type: .none, index: index, cell: cell, color: .systemYellow)
@@ -257,7 +257,7 @@ class ViewController: UIViewController {
     }
     
     //보여주는 함수
-    func showSchedule(type: careType, index: Int, cell: UICollectionViewCell, color: UIColor) {
+    func showSchedule(type: careType, index: Int, cell: calendarCollectionViewCell, color: UIColor) {
         for dayData in daysArr {
             let date = dayData.day
             let endIdx: String.Index = date.index(date.startIndex, offsetBy: 5)
@@ -269,14 +269,14 @@ class ViewController: UIViewController {
             if formatterDateFunc() == ym {
                 if Int(d) == Int(days[index]) {
                     if type == .none {
-                        cell.backgroundColor = color
+                        cell.scheduleLabel.backgroundColor = color
                     }
                     else if type == dayData.type {
-                        cell.backgroundColor = color
+                        cell.scheduleLabel.backgroundColor = color
                     }
                     
                 }
-                
+    
             }
             
         }
@@ -337,7 +337,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
         } else {
             cell.dayLabel.textColor = .black
         }
-        cell.backgroundColor = .systemBackground
+        cell.scheduleLabel.backgroundColor = .systemBackground
         cell.scheduleLabel.text = ""
         
         switch indexPath.section {

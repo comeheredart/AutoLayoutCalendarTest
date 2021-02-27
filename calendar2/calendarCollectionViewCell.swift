@@ -25,6 +25,7 @@ class calendarCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -52,8 +53,8 @@ class calendarCollectionViewCell: UICollectionViewCell {
         
         NSLayoutConstraint.activate([
             scheduleLabel.topAnchor.constraint(equalTo: dayLabel.bottomAnchor, constant: 20),
-            scheduleLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor)
-        
+            scheduleLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            scheduleLabel.widthAnchor.constraint(equalTo: contentView.widthAnchor)
         ])
     }
 }
