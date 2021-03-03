@@ -6,9 +6,11 @@
 //
 
 import UIKit
+import RealmSwift
 
 class ViewController: UIViewController {
     
+    let realm = try! Realm()
     let now = Date()
     var cal = Calendar.current
     let dateFormatter = DateFormatter()
@@ -84,6 +86,7 @@ class ViewController: UIViewController {
         addConstraints()
         initCollection()
         initgesture()
+        readRealm()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -241,6 +244,14 @@ class ViewController: UIViewController {
         return String(input)
     }
     
+    func readRealm() {
+        var temp: Results<daySchedule>
+        temp = realm.objects(daySchedule.self)
+        for i in temp {
+            daysArr.append(i)
+        }
+    }
+    
     func showTypeSchedule(type: Int, index: Int, cell: calendarCollectionViewCell) {
         switch type {
         case 0:
@@ -252,7 +263,7 @@ class ViewController: UIViewController {
         case 3:
             showSchedule(type: .med, index: index, cell: cell, color: .systemPink)
         default:
-            showSchedule(type: .snack, index: index, cell: cell, color: .green)
+            showSchedule(type: .pill, index: index, cell: cell, color: .green)
         }
     }
     
@@ -269,10 +280,22 @@ class ViewController: UIViewController {
             if formatterDateFunc() == ym {
                 if Int(d) == Int(days[index]) {
                     if type == .none {
-                        cell.scheduleLabel.backgroundColor = color
+                        
+                        if cell.scheduleLabel.text == "" {
+                            cell.scheduleLabel.backgroundColor = color
+                        } else {
+                            cell.secondScheduleLabel.backgroundColor = color
+                        }
+                        
                     }
-                    else if type == dayData.type {
-                        cell.scheduleLabel.backgroundColor = color
+                    else if type == dayData.caretype {
+                        
+                        if cell.scheduleLabel.text == "" {
+                            cell.scheduleLabel.backgroundColor = color
+                        } else {
+                            cell.secondScheduleLabel.backgroundColor = color
+                        }
+                        
                     }
                     
                 }
@@ -293,8 +316,12 @@ class ViewController: UIViewController {
 
             if formatterDateFunc() == ym {
                 if Int(d) == Int(days[index]) {
-                    cell.scheduleLabel.text = dayData.title
-
+                    if cell.scheduleLabel.text == "" {
+                        cell.scheduleLabel.text = dayData.title
+                    } else {
+                        cell.secondScheduleLabel.text = dayData.title
+                    }
+                    
                 }
 
             }
@@ -337,8 +364,12 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
         } else {
             cell.dayLabel.textColor = .black
         }
+        
         cell.scheduleLabel.backgroundColor = .systemBackground
+        cell.secondScheduleLabel.backgroundColor = .systemBackground
         cell.scheduleLabel.text = ""
+        cell.secondScheduleLabel.text = ""
+        
         
         switch indexPath.section {
         case 0:
