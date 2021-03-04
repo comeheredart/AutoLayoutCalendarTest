@@ -26,12 +26,13 @@ class ViewController: UIViewController {
     private let headerView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .systemBlue
+        view.backgroundColor = #colorLiteral(red: 0.8274509804, green: 0.8784313725, blue: 0.9176470588, alpha: 1)
         return view
     }()
     
     private let TitleLabel: UILabel = {
         let label = UILabel()
+        label.font = .systemFont(ofSize: 20)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -53,7 +54,8 @@ class ViewController: UIViewController {
     private let preMonthBtn: UIButton = {
        let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("이전 달", for: .normal)
+        button.setImage(UIImage(systemName: "arrowtriangle.left.fill"), for: .normal)
+        button.tintColor = #colorLiteral(red: 0.0862745098, green: 0.5294117647, blue: 0.6549019608, alpha: 1)
         button.addTarget(self, action: #selector(didTapPreMonthButton), for: .touchUpInside)
         return button
     }()
@@ -62,7 +64,8 @@ class ViewController: UIViewController {
     private let nextMonthBtn: UIButton = {
        let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("다음 달", for: .normal)
+        button.setImage(UIImage(systemName: "arrowtriangle.right.fill"), for: .normal)
+        button.tintColor = #colorLiteral(red: 0.0862745098, green: 0.5294117647, blue: 0.6549019608, alpha: 1)
         button.addTarget(self, action: #selector(didTapNextMonthButton), for: .touchUpInside)
         return button
     }()
@@ -87,6 +90,7 @@ class ViewController: UIViewController {
         initCollection()
         initgesture()
         readRealm()
+        view.backgroundColor = #colorLiteral(red: 0.9647058824, green: 0.9607843137, blue: 0.9607843137, alpha: 1)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -281,27 +285,44 @@ class ViewController: UIViewController {
                 if Int(d) == Int(days[index]) {
                     if type == .none {
                         
-                        if cell.scheduleLabel.text == "" {
+//                        if cell.scheduleLabel.text != "" {
+//                            cell.scheduleLabel.backgroundColor = color
+//                        } else if cell.secondScheduleLabel.text != "" {
+//                            cell.secondScheduleLabel.backgroundColor = color
+//                        } else {
+//                            cell.thirdScheduleLabel.backgroundColor = color
+//                        }
+                        
+                        if cell.scheduleLabel.text != "" {
                             cell.scheduleLabel.backgroundColor = color
-                        } else {
+                        }
+                        if cell.secondScheduleLabel.text != "" {
                             cell.secondScheduleLabel.backgroundColor = color
+                        }
+                        if cell.thirdScheduleLabel.text != "" {
+                            cell.thirdScheduleLabel.backgroundColor = color
                         }
                         
                     }
                     else if type == dayData.caretype {
                         
-                        if cell.scheduleLabel.text == "" {
+                        if cell.scheduleLabel.text != "" {
                             cell.scheduleLabel.backgroundColor = color
-                        } else {
+                        }
+                        if cell.secondScheduleLabel.text != "" {
                             cell.secondScheduleLabel.backgroundColor = color
                         }
+                        if cell.thirdScheduleLabel.text != "" {
+                            cell.thirdScheduleLabel.backgroundColor = color
+                        }
+                        //dayData 현재가 몇번째인지 고민해보고 다시짜기
+                    }
                         
+                       
                     }
                     
                 }
     
-            }
-            
         }
     }
     
@@ -316,12 +337,15 @@ class ViewController: UIViewController {
 
             if formatterDateFunc() == ym {
                 if Int(d) == Int(days[index]) {
+                    
                     if cell.scheduleLabel.text == "" {
                         cell.scheduleLabel.text = dayData.title
-                    } else {
+                    } else if cell.secondScheduleLabel.text == "" {
                         cell.secondScheduleLabel.text = dayData.title
+                    } else {
+                        cell.thirdScheduleLabel.text = dayData.title
                     }
-                    
+
                 }
 
             }
@@ -365,21 +389,68 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
             cell.dayLabel.textColor = .black
         }
         
-        cell.scheduleLabel.backgroundColor = .systemBackground
-        cell.secondScheduleLabel.backgroundColor = .systemBackground
+        cell.scheduleLabel.backgroundColor = view.backgroundColor
+        cell.secondScheduleLabel.backgroundColor = view.backgroundColor
+        cell.thirdScheduleLabel.backgroundColor = view.backgroundColor
+        
         cell.scheduleLabel.text = ""
         cell.secondScheduleLabel.text = ""
+        cell.thirdScheduleLabel.text = ""
         
         
         switch indexPath.section {
         case 0:
             break
         default:
-            showTypeSchedule(type: typeSegment.selectedSegmentIndex, index: indexPath.row, cell: cell)
             showTitleSchedule(index: indexPath.row, cell: cell)
+            showTypeSchedule(type: typeSegment.selectedSegmentIndex, index: indexPath.row, cell: cell)
+            
         }
         
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        let alert = UIAlertController()
+        let action = UIAlertAction(title: "확인", style: .cancel) { _ in self.dismiss(animated: true) }
+        alert.addAction(action)
+        
+        alert.title = "\(components.year!)년 \(components.month!)월 \(indexPath.row)일의 일정!"
+        let now = formatterDateFunc() + formatterDayFunc(input: indexPath.row)
+        print(now)
+        
+        
+        for i in daysArr {
+            if i.day == now {
+                
+                var typeName = ""
+                
+                switch i.privateType {
+                case 0:
+                    typeName = "병원"
+                case 1:
+                    typeName = "사료구매"
+                case 2:
+                    typeName = "예방접종"
+                case 3:
+                    typeName = "구충제"
+                default:
+                    typeName = "타입없음"
+                }
+                
+                if alert.message != nil {
+                    alert.message?.append("\(i.title)  \(typeName)\n")
+                } else {
+                    alert.message = "\(i.title)  \(typeName)\n"
+                }
+                
+                
+            }
+        }
+        
+    
+        self.present(alert, animated: true)
     }
     
     

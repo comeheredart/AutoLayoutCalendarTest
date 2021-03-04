@@ -32,6 +32,13 @@ class calendarCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
+    let thirdScheduleLabel: UILabel = {
+       let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = .systemFont(ofSize: 10)
+        return label
+    }()
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -48,6 +55,7 @@ class calendarCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(dayLabel)
         contentView.addSubview(scheduleLabel)
         contentView.addSubview(secondScheduleLabel)
+        contentView.addSubview(thirdScheduleLabel)
         
         addContraints()
 
@@ -69,6 +77,13 @@ class calendarCollectionViewCell: UICollectionViewCell {
             secondScheduleLabel.topAnchor.constraint(equalTo: scheduleLabel.bottomAnchor, constant: 3),
             secondScheduleLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             secondScheduleLabel.widthAnchor.constraint(equalTo: contentView.widthAnchor)
+        
+        ])
+        
+        NSLayoutConstraint.activate([
+            thirdScheduleLabel.topAnchor.constraint(equalTo: secondScheduleLabel.bottomAnchor, constant: 3),
+            thirdScheduleLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            thirdScheduleLabel.widthAnchor.constraint(equalTo: contentView.widthAnchor)
         
         ])
     }
