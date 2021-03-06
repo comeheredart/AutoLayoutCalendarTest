@@ -21,7 +21,6 @@ class ViewController: UIViewController {
     var weekdayAdding = 0 // 시작일
     var daysArr: [daySchedule] = []
     
-    
 
     private let headerView: UIView = {
         let view = UIView()
@@ -412,45 +411,57 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        let alert = UIAlertController()
-        let action = UIAlertAction(title: "확인", style: .cancel) { _ in self.dismiss(animated: true) }
-        alert.addAction(action)
+
         
-        alert.title = "\(components.year!)년 \(components.month!)월 \(indexPath.row)일의 일정!"
-        let now = formatterDateFunc() + formatterDayFunc(input: indexPath.row)
-        print(now)
-        
-        
-        for i in daysArr {
-            if i.day == now {
-                
-                var typeName = ""
-                
-                switch i.privateType {
-                case 0:
-                    typeName = "병원"
-                case 1:
-                    typeName = "사료구매"
-                case 2:
-                    typeName = "예방접종"
-                case 3:
-                    typeName = "구충제"
-                default:
-                    typeName = "타입없음"
-                }
-                
-                if alert.message != nil {
-                    alert.message?.append("\(i.title)  \(typeName)\n")
-                } else {
-                    alert.message = "\(i.title)  \(typeName)\n"
-                }
-                
-                
-            }
+//        let alert = UIAlertController()
+//        let action = UIAlertAction(title: "확인", style: .cancel) { _ in self.dismiss(animated: true) }
+//        alert.addAction(action)
+//
+//        alert.title = "\(components.year!)년 \(components.month!)월 \(indexPath.row)일의 일정!"
+//        let now = formatterDateFunc() + formatterDayFunc(input: indexPath.row)
+//        print(now)
+//
+//
+//
+//
+//        for i in daysArr {
+//            if i.day == now {
+//
+//                var typeName = ""
+//
+//                switch i.privateType {
+//                case 0:
+//                    typeName = "병원"
+//                case 1:
+//                    typeName = "사료구매"
+//                case 2:
+//                    typeName = "예방접종"
+//                case 3:
+//                    typeName = "구충제"
+//                default:
+//                    typeName = "타입없음"
+//                }
+//
+//                if alert.message != nil {
+//                    alert.message?.append("\(i.title)  \(typeName)\n")
+//                } else {
+//                    alert.message = "\(i.title)  \(typeName)\n"
+//                }
+//
+//
+//            }
+//        }
+
+//        self.present(alert, animated: true)
+        self.performSegue(withIdentifier: "DetailSegue", sender: nil)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "DetailSegue" {
+            let dest = segue.destination
+            dest.modalPresentationStyle = .overCurrentContext
         }
         
-    
-        self.present(alert, animated: true)
     }
     
     

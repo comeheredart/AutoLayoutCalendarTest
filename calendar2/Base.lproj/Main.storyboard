@@ -15,16 +15,12 @@
                     <view key="view" contentMode="scaleToFill" id="QjU-hI-a67">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nm1-xa-W25">
-                                <rect key="frame" x="142" y="527" width="182" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button" image="arrow"/>
-                            </button>
-                        </subviews>
                         <viewLayoutGuide key="safeArea" id="v1N-u3-6kI"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
+                    <connections>
+                        <segue destination="xwE-RY-ylV" kind="presentation" identifier="DetailSegue" modalPresentationStyle="fullScreen" modalTransitionStyle="flipHorizontal" id="VPp-2h-O3F"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Mz2-cB-kbg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -43,11 +39,26 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BAd-ea-IoT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="800" y="88"/>
+            <point key="canvasLocation" x="1661" y="-596"/>
+        </scene>
+        <!--Detail View Controller-->
+        <scene sceneID="kR8-9G-qeN">
+            <objects>
+                <viewController id="xwE-RY-ylV" customClass="DetailViewController" customModule="calendar2" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="juy-Ub-T65">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="6LB-gH-lU4"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="FoD-iP-kmp"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="OaV-b9-ib0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1660.8695652173915" y="87.723214285714278"/>
         </scene>
     </scenes>
     <resources>
-        <image name="arrow" width="128" height="128"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
