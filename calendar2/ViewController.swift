@@ -411,22 +411,6 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-
-        
-//        let alert = UIAlertController()
-//        let action = UIAlertAction(title: "확인", style: .cancel) { _ in self.dismiss(animated: true) }
-//        alert.addAction(action)
-//
-//        alert.title = "\(components.year!)년 \(components.month!)월 \(indexPath.row)일의 일정!"
-//        let now = formatterDateFunc() + formatterDayFunc(input: indexPath.row)
-//        print(now)
-//
-//
-//
-//
-//        for i in daysArr {
-//            if i.day == now {
-//
 //                var typeName = ""
 //
 //                switch i.privateType {
@@ -442,24 +426,26 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
 //                    typeName = "타입없음"
 //                }
 //
-//                if alert.message != nil {
-//                    alert.message?.append("\(i.title)  \(typeName)\n")
-//                } else {
-//                    alert.message = "\(i.title)  \(typeName)\n"
-//                }
-//
-//
-//            }
-//        }
-
-//        self.present(alert, animated: true)
-        self.performSegue(withIdentifier: "DetailSegue", sender: nil)
+        
+        self.performSegue(withIdentifier: "DetailSegue", sender: indexPath.row)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "DetailSegue" {
-            let dest = segue.destination
-            dest.modalPresentationStyle = .overCurrentContext
+            let now = formatterDateFunc() + formatterDayFunc(input: sender as! Int)
+            let destVC = segue.destination as! DetailViewController
+            destVC.modalPresentationStyle = .overCurrentContext
+            destVC.today = now
+            destVC.year = String(components.year!)
+            destVC.month = String(components.month!)
+            destVC.day = formatterDayFunc(input: sender as! Int)
+            
+            for i in daysArr {
+                if i.day == now {
+                    destVC.scheduleArr.append(i)
+                }
+            }
+            
         }
         
     }
