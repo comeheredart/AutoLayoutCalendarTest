@@ -284,14 +284,6 @@ class ViewController: UIViewController {
                 if Int(d) == Int(days[index]) {
                     if type == .none {
                         
-//                        if cell.scheduleLabel.text != "" {
-//                            cell.scheduleLabel.backgroundColor = color
-//                        } else if cell.secondScheduleLabel.text != "" {
-//                            cell.secondScheduleLabel.backgroundColor = color
-//                        } else {
-//                            cell.thirdScheduleLabel.backgroundColor = color
-//                        }
-                        
                         if cell.scheduleLabel.text != "" {
                             cell.scheduleLabel.backgroundColor = color
                         }
@@ -410,22 +402,6 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-//                var typeName = ""
-//
-//                switch i.privateType {
-//                case 0:
-//                    typeName = "병원"
-//                case 1:
-//                    typeName = "사료구매"
-//                case 2:
-//                    typeName = "예방접종"
-//                case 3:
-//                    typeName = "구충제"
-//                default:
-//                    typeName = "타입없음"
-//                }
-//
         
         self.performSegue(withIdentifier: "DetailSegue", sender: indexPath.row)
     }

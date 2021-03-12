@@ -6,12 +6,15 @@
 //
 
 import UIKit
+import RealmSwift
 
 class DetailTableViewCell: UITableViewCell {
 
+    let realm = try! Realm()
     var deleteBtn = UIButton()
     var scheduleLabel = UILabel()
     var typeLabel = UILabel()
+    var schedule: daySchedule? = nil
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -32,6 +35,7 @@ class DetailTableViewCell: UITableViewCell {
     }
     
     func set(schedule: daySchedule) {
+        self.schedule = schedule
         scheduleLabel.text = schedule.title
         
         switch schedule.privateType {
@@ -53,6 +57,19 @@ class DetailTableViewCell: UITableViewCell {
         deleteBtn.translatesAutoresizingMaskIntoConstraints = false
         deleteBtn.backgroundColor = .systemBlue
         deleteBtn.setTitle("삭제", for: .normal)
+        deleteBtn.addTarget(self, action: #selector(deleteSchedule), for: .touchUpInside)
+    }
+    
+    @objc func deleteSchedule() {
+        if let schedule = schedule {
+            do{
+                try realm.write{
+                    realm.delete(schedule)
+                }
+            } catch {
+                print("Error Delete \(error)")
+            }
+        }
     }
     
     func configureScheduleLabel() {

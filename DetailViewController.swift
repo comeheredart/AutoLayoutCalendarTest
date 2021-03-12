@@ -25,8 +25,6 @@ class DetailViewController: UIViewController {
         addSubViews()
         addConstraints()
         
-        print(today)
-        print(scheduleArr)
     }
     
     
@@ -122,6 +120,7 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Cells.detailCell) as! DetailTableViewCell
+        cell.contentView.isUserInteractionEnabled = false;
         let schedule = scheduleArr[indexPath.row]
         cell.set(schedule: schedule)
         
