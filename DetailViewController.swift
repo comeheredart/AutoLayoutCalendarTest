@@ -100,6 +100,7 @@ class DetailViewController: UIViewController {
     
     @objc func closeModal() {
         self.dismiss(animated: true)
+        self.scheduleTable.reloadData()
         //삭제
     }
 

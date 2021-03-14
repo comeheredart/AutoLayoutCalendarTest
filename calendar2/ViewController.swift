@@ -90,6 +90,7 @@ class ViewController: UIViewController {
         initgesture()
         readRealm()
         view.backgroundColor = #colorLiteral(red: 0.9647058824, green: 0.9607843137, blue: 0.9607843137, alpha: 1)
+        print(getDocumentsDirectory())
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -248,11 +249,16 @@ class ViewController: UIViewController {
     }
     
     func readRealm() {
+//        let copy = realm.create(daySchedule.self, value: temp, update: .all)
+//        realm.add(copy, update: .all)
+        
         var temp: Results<daySchedule>
         temp = realm.objects(daySchedule.self)
         for i in temp {
             daysArr.append(i)
         }
+        
+        print(daysArr)
     }
     
     func showTypeSchedule(type: Int, index: Int, cell: calendarCollectionViewCell) {
@@ -342,6 +348,12 @@ class ViewController: UIViewController {
             }
 
         }
+    }
+    
+    func getDocumentsDirectory() -> URL {
+            let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+            let documentsDirectory = paths[0]
+            return documentsDirectory
     }
 
 }

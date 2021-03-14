@@ -64,6 +64,7 @@ class DetailTableViewCell: UITableViewCell {
         if let schedule = schedule {
             do{
                 try realm.write{
+                    print(schedule)
                     realm.delete(schedule)
                 }
             } catch {
